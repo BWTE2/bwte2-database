@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: localhost:3306
--- Čas generovania: Po 10.Máj 2021, 07:42
+-- Čas generovania: Pi 14.Máj 2021, 10:41
 -- Verzia serveru: 8.0.23-0ubuntu0.20.04.1
 -- Verzia PHP: 8.0.3
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáza: `bwte2`
+-- Databáza: `Zaverecne_zadanie`
 --
 
 -- --------------------------------------------------------
@@ -46,15 +46,6 @@ CREATE TABLE `correct_question_option` (
   `question_option_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Sťahujem dáta pre tabuľku `correct_question_option`
---
-
-INSERT INTO `correct_question_option` (`id`, `question_id`, `question_option_id`) VALUES
-(1, 16, 31),
-(2, 16, 33),
-(3, 17, 36);
-
 -- --------------------------------------------------------
 
 --
@@ -70,15 +61,6 @@ CREATE TABLE `question` (
   `max_points` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Sťahujem dáta pre tabuľku `question`
---
-
-INSERT INTO `question` (`id`, `test_id`, `text`, `answer`, `type`, `max_points`) VALUES
-(12, 8, 'Spoj hlavne mesto so statom', NULL, 'PAIR', 5),
-(16, 11, 'Ako sa mas ?', NULL, 'CHOICE', 3),
-(17, 11, 'Ake je hlavne mesto Bratislavy ?', NULL, 'CHOICE', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -93,24 +75,6 @@ CREATE TABLE `question_option` (
   `value2` text CHARACTER SET utf8 COLLATE utf8_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Sťahujem dáta pre tabuľku `question_option`
---
-
-INSERT INTO `question_option` (`id`, `question_id`, `type`, `value1`, `value2`) VALUES
-(17, 12, 'PAIR', 'Slovensko', 'Bratislava'),
-(18, 12, 'PAIR', 'Cesko', 'Praha'),
-(19, 12, 'PAIR', 'Madarsko', 'Budapest'),
-(20, 12, 'PAIR', 'Rakusko', 'Vieden'),
-(21, 12, 'PAIR', 'Polsko', 'Varsava'),
-(31, 16, 'CHOICE', 'Pohodeee', NULL),
-(32, 16, 'CHOICE', 'zle', NULL),
-(33, 16, 'CHOICE', 'da sa', NULL),
-(34, 17, 'CHOICE', 'Miro Pele', NULL),
-(35, 17, 'CHOICE', 'Bratislava', NULL),
-(36, 17, 'CHOICE', 'neexistuje', NULL),
-(37, 17, 'CHOICE', 'Slovensko', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -123,8 +87,8 @@ CREATE TABLE `question_student` (
   `student_id` varchar(10) NOT NULL,
   `type` enum('SHORT_ANSWER','CHOICE','PAIR','DRAW','MATH') NOT NULL,
   `is_correct` tinyint(1) DEFAULT NULL,
-  `answer` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `answer_photo` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `answer` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `answer_photo` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci,
   `points` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -165,13 +129,6 @@ CREATE TABLE `student` (
   `surname` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Sťahujem dáta pre tabuľku `student`
---
-
-INSERT INTO `student` (`id`, `name`, `surname`) VALUES
-('1', 'Frodo', 'Bublik');
-
 -- --------------------------------------------------------
 
 --
@@ -199,13 +156,6 @@ CREATE TABLE `teacher` (
   `password` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Sťahujem dáta pre tabuľku `teacher`
---
-
-INSERT INTO `teacher` (`id`, `name`, `surname`, `email`, `password`) VALUES
-(1, 'Ferko', 'Mrkvička', 'ferko@mrkvicka.sk', '12345678');
-
 -- --------------------------------------------------------
 
 --
@@ -221,14 +171,6 @@ CREATE TABLE `test` (
   `duration` int NOT NULL,
   `test_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Sťahujem dáta pre tabuľku `test`
---
-
-INSERT INTO `test` (`id`, `teacher_id`, `title`, `code`, `is_active`, `duration`, `test_created`) VALUES
-(8, 1, 'Test 01 - staty', 'H8890H', 0, 30, '2021-05-07 22:31:03'),
-(11, 1, 'Multi choice -test', 'N8XDUH', 0, 22, '2021-05-10 07:41:41');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -321,25 +263,25 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT pre tabuľku `correct_answer`
 --
 ALTER TABLE `correct_answer`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pre tabuľku `correct_question_option`
 --
 ALTER TABLE `correct_question_option`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pre tabuľku `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pre tabuľku `question_option`
 --
 ALTER TABLE `question_option`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pre tabuľku `question_student`
@@ -369,13 +311,13 @@ ALTER TABLE `student_action`
 -- AUTO_INCREMENT pre tabuľku `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pre tabuľku `test`
 --
 ALTER TABLE `test`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Obmedzenie pre exportované tabuľky
